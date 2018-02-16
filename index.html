@@ -1289,6 +1289,25 @@
           </p>
         </section>
       </section>
+      <section data-dfn=for="PaymentHandlerDetailsModifier
+             data-link-for="PaymentHandlerDetailsModifier">
+        <h2>
+          <dfn>PaymentHandlerDetailsModifier</dfn> dictionary
+        </h2>
+        <pre class="idl">
+          dictionary PaymentDetailsModifier {
+            required DOMString supportedMethods;
+            PaymentCurrencyAmount total;
+            object data;
+          };
+        </pre>
+        <p>
+          The <a>PaymentHandlerDetailsModifier</a> dictionary provides details
+          that modify the <a>PaymentRequestEvent</a> based on a <a>payment
+          method identifier</a> and the <a>capabilities</a>. The members are
+          defined in <a>PaymentDetailsModifier</a>.
+        </p>
+      </section>
       <section data-dfn-for="PaymentRequestEvent" data-link-for=
       "PaymentRequestEvent">
         <h2>
@@ -1306,7 +1325,7 @@
           readonly attribute DOMString paymentRequestId;
           readonly attribute FrozenArray&lt;PaymentMethodData&gt; methodData;
           readonly attribute object total;
-          readonly attribute FrozenArray&lt;PaymentDetailsModifier&gt; modifiers;
+          readonly attribute FrozenArray&lt;PaymentHandlerDetailsModifier&gt; modifiers;
           readonly attribute DOMString instrumentKey;
           Promise&lt;WindowClient?&gt; openWindow(USVString url);
           void respondWith(Promise&lt;PaymentHandlerResponse&gt;handlerResponsePromise);
@@ -1383,7 +1402,7 @@
             <dfn>modifiers</dfn> attribute
           </h2>
           <p>
-            This sequence of <a>PaymentDetailsModifier</a> dictionaries
+            This sequence of <a>PaymentHandlerDetailsModifier</a> dictionaries
             contains modifiers for particular payment method identifiers (e.g.,
             if the payment amount or currency type varies based on a
             per-payment-method basis). It is populated from the
@@ -1444,7 +1463,7 @@
               DOMString paymentRequestId;
               sequence&lt;PaymentMethodData&gt; methodData;
               PaymentCurrencyAmount total;
-              sequence&lt;PaymentDetailsModifier&gt; modifiers;
+              sequence&lt;PaymentHandlerDetailsModifier&gt; modifiers;
               DOMString instrumentKey;
             };
           </pre>
@@ -1546,16 +1565,16 @@
                 <li>If <var>commonMethods</var> is empty, skip the remaining
                 substeps and move on to the next item (if any).
                 </li>
-                <li>Create a new <a>PaymentDetailsModifier</a> object.
+                <li>Create a new <a>PaymentHandlerDetailsModifier</a> object.
                 </li>
                 <li>Set <var>outModifier</var> to the newly created
-                <a>PaymentDetailsModifier</a>.
+                <a>PaymentHandlerDetailsModifier</a>.
                 </li>
                 <li>Set <var>outModifier</var>.<a>supportedMethods</a> to a
                 list containing the members of <var>commonMethods</var>.
                 </li>
                 <li>Set <var>outModifier</var>.<a>total</a> to a <a>structured
-                clone</a> of <var>inModifier</var>.<a>total</a>.
+                clone</a> of <var>inModifier</var>.<a>total</a>.<a>currency</a>.
                 </li>
                 <li>Append <var>outModifier</var> to <var>modifierList</var>.
                 </li>
