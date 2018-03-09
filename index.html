@@ -643,7 +643,7 @@
       dictionary PaymentInstrument {
         required DOMString name;
         sequence&lt;ImageObject&gt; icons;
-        sequence&lt;DOMString&gt; enabledMethods;
+        DOMString enabledMethods;
         object capabilities;
       };
       </pre>
@@ -668,9 +668,9 @@
               <dfn>enabledMethods</dfn> member
             </dt>
             <dd>
-              The <a>enabledMethods</a> member is a list of one or more
-              <a>payment method identifiers</a> of the <a>payment methods</a>
-              supported by this instrument.
+              The <a>enabledMethods</a> member is a <a>payment method
+              identifier</a> of the <a>payment method</a> supported by this
+              instrument.
             </dd>
             <dt>
               <dfn>capabilities</dfn> member
@@ -806,7 +806,7 @@
           instrumentKey,
           {
             name: "My Bob Pay Account: john@example.com",
-            enabledMethods: ["https://bobpay.com/"],
+            enabledMethods: "https://bobpay.com",
             icons: [{
               src: "icon/lowres.webp",
               sizes: "48x48",
@@ -831,7 +831,7 @@
           instrumentKey,
           {
             name: "My Bob Pay Account: john@example.com",
-            enabledMethods: ["https://bobpay.com/"],
+            enabledMethods: "https://bobpay.com",
             icons: [{
               src: "../bobpay/icon/lowres.webp",
               sizes: "48x48",
@@ -864,7 +864,7 @@
           }
 
           const { registration } =
-            await navigator.serviceWorker.register('/sw.js');
+            await navigator.serviceWorker.register("/sw.js");
 
           // Excellent, we got it! Let's now set up the user's cards.
           await addInstruments(registration);
@@ -876,10 +876,10 @@
               "dc2de27a-ca5e-4fbd-883e-b6ded6c69d4f",
               {
                 name: "Visa ending ****4756",
-                enabledMethods: ["basic-card"],
+                enabledMethods: "basic-card",
                 capabilities: {
-                  supportedNetworks: ['visa'],
-                  supportedTypes: ['credit']
+                  supportedNetworks: ["visa"],
+                  supportedTypes: ["credit"]
                 }
               }),
 
@@ -887,18 +887,18 @@
               "c8126178-3bba-4d09-8f00-0771bcfd3b11",
               {
                 name: "My Bob Pay Account: john@example.com",
-                enabledMethods: ["https://bobpay.com/"]
+                enabledMethods: "https://bobpay.com"
               }),
 
             registration.paymentManager.instruments.set(
               "new-card",
               {
                 name: "Add new credit/debit card to ExampleApp",
-                enabledMethods: ["basic-card"],
+                enabledMethods: "basic-card",
                 capabilities: {
                   supportedNetworks:
-                    ['visa','mastercard','amex','discover'],
-                  supportedTypes: ['credit','debit','prepaid']
+                    ["visa", "mastercard", "amex", "discover"],
+                  supportedTypes: ["credit", "debit", "prepaid"]
                 }
               }),
             ]);
@@ -965,31 +965,31 @@
             active cards to the browser.
           </p>
           <pre class="example js" title="Specifying capabilities">
-          await navigator.serviceWorker.register('/pw/app.js');
+          await navigator.serviceWorker.register("/pw/app.js");
           const registration = await navigator.serviceWorker.ready;
-          registration.paymentManager.userHint = '(Visa ****1111)';
+          registration.paymentManager.userHint = "(Visa ****1111)";
           await registration.paymentManager.instruments.set(
-            '12345',
+            "12345",
             {
               name: "Visa ****1111",
               icons: [{
-                src: '/pay/visa.png',
-                sizes: '32x32',
-                type: 'image/png',
+                src: "/pay/visa.png",
+                sizes: "32x32",
+                type: "image/png",
               }],
-              enabledMethods: ['basic-card'],
+              enabledMethods: "basic-card",
               capabilities: {
-                supportedNetworks: ['visa'],
-                supportedTypes: ['credit'],
+                supportedNetworks: ["visa"],
+                supportedTypes: ["credit"],
               },
             });
           </pre>
           <p>
             In this case, <code>new PaymentRequest([{supportedMethods:
-            'basic-card'}], shoppingCart).canMakePayment()</code> should return
+            "basic-card"}], shoppingCart).canMakePayment()</code> should return
             <code>true</code> because there's an active card in the payment
             handler. Note that <code>new PaymentRequest([{supportedMethods:
-            'basic-card', data: {supportedTypes: ['debit']}}],
+            "basic-card", data: {supportedTypes: ["debit"]}}],
             shoppingCart).canMakePayment()</code> would return
             <code>false</code> because of mismatch in
             <code>supportedTypes</code> in this example.
@@ -1470,7 +1470,7 @@
             <li>For each <a>PaymentInstrument</a> <var>instrument</var> in the
             <a>payment handler</a>'s <a data-lt=
             "ServiceWorkerRegistration.paymentManager">PaymentManager</a>.<a data-lt="PaymentManager.instruments">instruments</a>,
-              add all entries in <var>instrument</var>.<a data-lt=
+              add the value of <var>instrument</var>.<a data-lt=
               "PaymentInstrument.enabledMethods">enabledMethods</a> to
               <var>registeredMethods</var>.
             </li>
@@ -1524,7 +1524,7 @@
             <li>For each <a>PaymentInstrument</a> <var>instrument</var> in the
             <a>payment handler</a>'s <a data-lt=
             "ServiceWorkerRegistration.paymentManager">PaymentManager</a>.<a data-lt="PaymentManager.instruments">instruments</a>,
-              add all entries in <var>instrument</var>.<a data-lt=
+              add the value of <var>instrument</var>.<a data-lt=
               "PaymentInstrument.enabledMethods">enabledMethods</a> to
               <var>registeredMethods</var>.
             </li>
