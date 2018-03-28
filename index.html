@@ -193,8 +193,8 @@
         <li>During service worker registration, the <a>PaymentManager</a> is
         used to set:
           <ul>
-            <li>A list of <a data-lt="PaymentInstrument.enabledMethods">enabled
-            payment methods</a>.
+            <li>A list of <a data-lt="PaymentInstrument.method">enabled payment
+            methods</a>.
             </li>
             <li>[Optionally] the conditions under which the handler supports a
             given payment method; these <a data-lt=
@@ -643,7 +643,7 @@
       dictionary PaymentInstrument {
         required DOMString name;
         sequence&lt;ImageObject&gt; icons;
-        DOMString enabledMethods;
+        DOMString method;
         object capabilities;
       };
       </pre>
@@ -665,12 +665,11 @@
               presented to the user for selection.
             </dd>
             <dt>
-              <dfn>enabledMethods</dfn> member
+              <dfn>method</dfn> member
             </dt>
             <dd>
-              The <a>enabledMethods</a> member is a <a>payment method
-              identifier</a> of the <a>payment method</a> supported by this
-              instrument.
+              The <a>method</a> member is a <a>payment method identifier</a> of
+              the <a>payment method</a> supported by this instrument.
             </dd>
             <dt>
               <dfn>capabilities</dfn> member
@@ -806,7 +805,7 @@
           instrumentKey,
           {
             name: "My Bob Pay Account: john@example.com",
-            enabledMethods: "https://bobpay.com",
+            method: "https://bobpay.com",
             icons: [{
               src: "icon/lowres.webp",
               sizes: "48x48",
@@ -831,7 +830,7 @@
           instrumentKey,
           {
             name: "My Bob Pay Account: john@example.com",
-            enabledMethods: "https://bobpay.com",
+            method: "https://bobpay.com",
             icons: [{
               src: "../bobpay/icon/lowres.webp",
               sizes: "48x48",
@@ -876,7 +875,7 @@
               "dc2de27a-ca5e-4fbd-883e-b6ded6c69d4f",
               {
                 name: "Visa ending ****4756",
-                enabledMethods: "basic-card",
+                method: "basic-card",
                 capabilities: {
                   supportedNetworks: ["visa"],
                   supportedTypes: ["credit"]
@@ -887,14 +886,14 @@
               "c8126178-3bba-4d09-8f00-0771bcfd3b11",
               {
                 name: "My Bob Pay Account: john@example.com",
-                enabledMethods: "https://bobpay.com"
+                method: "https://bobpay.com"
               }),
 
             registration.paymentManager.instruments.set(
               "new-card",
               {
                 name: "Add new credit/debit card to ExampleApp",
-                enabledMethods: "basic-card",
+                method: "basic-card",
                 capabilities: {
                   supportedNetworks:
                     ["visa", "mastercard", "amex", "discover"],
@@ -977,7 +976,7 @@
                 sizes: "32x32",
                 type: "image/png",
               }],
-              enabledMethods: "basic-card",
+              method: "basic-card",
               capabilities: {
                 supportedNetworks: ["visa"],
                 supportedTypes: ["credit"],
@@ -1471,7 +1470,7 @@
             <a>payment handler</a>'s <a data-lt=
             "ServiceWorkerRegistration.paymentManager">PaymentManager</a>.<a data-lt="PaymentManager.instruments">instruments</a>,
               add the value of <var>instrument</var>.<a data-lt=
-              "PaymentInstrument.enabledMethods">enabledMethods</a> to
+              "PaymentInstrument.method">method</a> to
               <var>registeredMethods</var>.
             </li>
             <li>Create a new empty <a>Sequence</a>.
@@ -1525,7 +1524,7 @@
             <a>payment handler</a>'s <a data-lt=
             "ServiceWorkerRegistration.paymentManager">PaymentManager</a>.<a data-lt="PaymentManager.instruments">instruments</a>,
               add the value of <var>instrument</var>.<a data-lt=
-              "PaymentInstrument.enabledMethods">enabledMethods</a> to
+              "PaymentInstrument.method">method</a> to
               <var>registeredMethods</var>.
             </li>
             <li>Create a new empty <a>Sequence</a>.
